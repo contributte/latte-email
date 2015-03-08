@@ -1,5 +1,8 @@
 # Latte email helper
 
+[![Downloads this Month](https://img.shields.io/packagist/dm/minetro/latte-email.svg?style=flat)](https://packagist.org/packages/minetro/latte-email)
+[![Latest stable](https://img.shields.io/packagist/v/minetro/latte-email.svg?style=flat)](https://packagist.org/packages/minetro/latte-email)
+
 Small Latte helper based on Smarty idea to protect your email address.
 
 ## Usage
@@ -20,14 +23,15 @@ function helper($email, $encode = NULL, $text = NULL)
 
 ## Latte syntax
 
+```
 {var $mail = "my@email.net"}
 
-{!$mail|email:"javascript"}
-{!$mail|email:"javascript_charcode"}
-{!$mail|email:"hex"}
-{!$mail|email:"javascript":"link to my email here"}
-{!$mail|email:"drupal"}
-{!$mail|email:"texy"}
+{$mail|email:"javascript"|noescape}
+{$mail|email:"javascript_charcode"|noescape}
+{$mail|email:"hex"|noescape}
+{$mail|email:"javascript":"link to my email here"|noescape}
+{$mail|email:"drupal"|noescape}
+{$mail|email:"texy"|noescape}
+```
 
-* '!' is necessary for not escaping html/javascript code
 
