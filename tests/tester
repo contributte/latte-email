@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+sh ../vendor/bin/tester LatteEmail -s -j 40 -log latte-email.log $@
+rm "./tmp" -f -R

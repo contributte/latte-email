@@ -11,6 +11,13 @@ namespace Minetro\Latte\Helpers;
 final class EmailHelper
 {
 
+    /** Encoding types */
+    const ENCODE_JAVASCRIPT = 'javascript';
+    const ENCODE_JAVASCRIPT_CHARCODE = 'javascript_charcode';
+    const ENCODE_HEX = 'hex';
+    const ENCODE_DRUPAL = 'drupal';
+    const ENCODE_TEXY = 'texy';
+
     /**
      * Smarty {mailto} function plugin
      *
@@ -28,11 +35,11 @@ final class EmailHelper
      */
     public static function mailto($address, $encode = NULL, $text = NULL)
     {
-        $text = (is_null($text) ? $address : $text);
-        $extra = NULL;
+        $_text = $text == NULL ? $address : $text;
+        $_extra = NULL;
 
         if ($encode == 'javascript') {
-            $string = 'document.write(\'<a href="mailto:' . $address . '" ' . $extra . '>' . $text . '</a>\');';
+            $string = 'document.write(\'<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>\');';
 
             $js_encode = '';
             for ($x = 0, $_length = strlen($string); $x < $_length; $x++) {
@@ -41,7 +48,7 @@ final class EmailHelper
 
             return '<script type="text/javascript">eval(unescape(\'' . $js_encode . '\'))</script>';
         } elseif ($encode == 'javascript_charcode') {
-            $string = '<a href="mailto:' . $address . '" ' . $extra . '>' . $text . '</a>';
+            $string = '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
 
             for ($x = 0, $y = strlen($string); $x < $y; $x++) {
                 $ord[] = ord($string[$x]);
@@ -70,24 +77,26 @@ final class EmailHelper
                 }
             }
             $text_encode = '';
-            for ($x = 0, $_length = strlen($text); $x < $_length; $x++) {
-                $text_encode .= '&#x' . bin2hex($text[$x]) . ';';
+            for ($x = 0, $_length = strlen($_text); $x < $_length; $x++) {
+                $text_encode .= '&#x' . bin2hex($_text[$x]) . ';';
             }
 
             $mailto = "&#109;&#97;&#105;&#108;&#116;&#111;&#58;";
 
-            return '<a href="' . $mailto . $address_encode . '" ' . $extra . '>' . $text_encode . '</a>';
+            return '<a href="' . $mailto . $address_encode . '" ' . $_extra . '>' . $text_encode . '</a>';
         } else if ($encode == 'drupal') {
             $address = str_replace('@', '[at]', $address);
+            $_text = $text == NULL ? $address : $_text;
 
-            return '<a href="mailto:' . $address . '">' . $address . '</a>';
+            return '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
         } else if ($encode == 'texy') {
             $address = str_replace('@', '<!-- ANTISPAM -->&#64;<!-- /ANTISPAM -->', $address);
+            $_text = $text == NULL ? $address : $_text;
 
-            return '<a href="mailto:' . $address . '">' . $address . '</a>';
+            return '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
         } else {
             // no encoding
-            return '<a href="mailto:' . $address . '" ' . $extra . '>' . $text . '</a>';
+            return '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
         }
     }
 

@@ -2,3 +2,4 @@
 /vendor
 # Files
 /composer.lock
+/tests/*.log
