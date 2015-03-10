@@ -5,6 +5,8 @@
 
 namespace Minetro\Latte\Helpers;
 
+use Nette\Utils\Html;
+
 /**
  * Smarty plugin fixed for Latte
  */
@@ -17,6 +19,17 @@ final class EmailHelper
     const ENCODE_HEX = 'hex';
     const ENCODE_DRUPAL = 'drupal';
     const ENCODE_TEXY = 'texy';
+
+    /**
+     * @param string $address
+     * @param string $encode [optional]
+     * @param string $text [optional]
+     * @return Html
+     */
+    public static function mailto($address, $encode = NULL, $text = NULL)
+    {
+        return Html::el()->setHtml(self::protect($address, $encode, $text));
+    }
 
     /**
      * Smarty {mailto} function plugin
@@ -33,7 +46,7 @@ final class EmailHelper
      *
      * @return string
      */
-    public static function mailto($address, $encode = NULL, $text = NULL)
+    public static function protect($address, $encode = NULL, $text = NULL)
     {
         $_text = $text == NULL ? $address : $text;
         $_extra = NULL;
