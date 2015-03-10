@@ -10,7 +10,7 @@ Small Latte helper based on Smarty idea to protect your email address.
 
 ## Install
 ```sh
-$ composer require minetro/latte-email:~1.1.0
+$ composer require minetro/latte-email:~1.2.0
 ```
 
 ## Usage
@@ -35,12 +35,24 @@ EmailHelper::mailto($email, $encode = NULL, $text = NULL)
 ```
 {var $mail = "my@email.net"}
 
-{$mail|email:"javascript"|noescape}
-{$mail|email:"javascript_charcode"|noescape}
+{$mail|email:"javascript"}
+{$mail|email:"javascript_charcode"}
 {$mail|email:"hex"|noescape}
-{$mail|email:"javascript":"link to my email here"|noescape}
-{$mail|email:"drupal"|noescape}
-{$mail|email:"texy"|noescape}
+{$mail|email:"javascript":"link to my email here"}
+{$mail|email:"drupal"}
+{$mail|email:"texy"}
 ```
+
+## Changelog
+
+
+### 1.2
+- Wrap to Nette\Utils\Html to not use annoying **noescape** helper
+
+### 1.1
+- Added tests
+
+### 1.0
+- Base idea
 
 
