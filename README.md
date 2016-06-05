@@ -83,11 +83,3 @@ final class TemplateFactory extends Nette\Bridges\ApplicationLatte\TemplateFacto
     }
 }
 ```
-
-Register in **TemplateFactory** or in `createTemplate()` or in your **config.neon**.
-
-```php
-use Minetro\Latte\Helpers\EmailHelper;
-
-EmailHelper::mailto($email, $encode = NULL, $text = NULL)
-```
