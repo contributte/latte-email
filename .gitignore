@@ -1,5 +1,8 @@
 # Folders
 /vendor
+
 # Files
 /composer.lock
+
+# Tests
 /tests/*.log
