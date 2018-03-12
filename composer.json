@@ -1,26 +1,49 @@
 {
-  "name": "minetro/latte-email",
+  "name": "contributte/latte-email",
   "description": "Latte email helper to protect your email addresses.",
   "type": "library",
-  "license": ["BSD-3-Clause"],
-  "homepage": "https://github.com/minetro/latte-email",
+  "license": ["MIT"],
+  "homepage": "https://github.com/contributte/latte-email",
   "authors": [
     {
-      "name": "Milan Felix Sulc",
-      "homepage": "http://jfx.cz"
+      "name": "Milan Felix Šulc",
+      "homepage": "https://f3l1x.io"
     }
   ],
   "require": {
-    "php": ">= 5.4.0",
-    "nette/utils": "~2.3.0"
+    "php": ">= 5.6.0",
+    "nette/utils": "~2.4.9"
   },
   "require-dev": {
-    "nette/tester": "~1.7.0",
-    "nette/application": "~2.3.0",
-    "nette/di": "~2.3.0",
-    "latte/latte": "~2.3.0"
+    "ninjify/qa": "^0.4.0",
+    "ninjify/nunjuck": "^0.2.0",
+    "nette/application": "~2.4.9",
+    "nette/di": "~2.4.10",
+    "latte/latte": "~2.4.7"
   },
   "autoload": {
-    "classmap": ["src/"]
+    "psr-4": {
+      "Contributte\\Latte\\Email\\Helpers\\": "src"
+    }
+  },
+  "scripts": {
+    "qa": [
+      "linter src tests",
+      "codesniffer src tests"
+    ],
+    "tester": [
+      "tester -s -p php --colors 1 -C tests/cases"
+    ],
+    "coverage": [
+      "tester -s -p php --colors 1 -C -d extension=xdebug.so --coverage ./coverage.xml --coverage-src ./src tests/cases"
+    ],
+    "phpstan-install": [
+      "mkdir -p temp/phpstan",
+      "composer require -d temp/phpstan phpstan/phpstan:0.8.5",
+      "composer require -d temp/phpstan phpstan/phpstan-nette:0.8.3"
+    ],
+    "phpstan": [
+      "temp/phpstan/vendor/bin/phpstan analyse -l 1 -c phpstan.neon src"
+    ]
   }
 }
