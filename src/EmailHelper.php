@@ -5,6 +5,7 @@
 
 namespace Contributte\Latte\Email\Helpers;
 
+use InvalidArgumentException;
 use Nette\Utils\Html;
 
 /**
@@ -62,6 +63,7 @@ final class EmailHelper
 			return '<script type="text/javascript">eval(unescape(\'' . $js_encode . '\'))</script>';
 		} elseif ($encode == 'javascript_charcode') {
 			$string = '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
+			$ord = [];
 
 			for ($x = 0, $y = strlen($string); $x < $y; $x++) {
 				$ord[] = ord($string[$x]);
@@ -78,9 +80,7 @@ final class EmailHelper
 		} elseif ($encode == 'hex') {
 			preg_match('!^(.*)(\?.*)$!', $address, $match);
 			if (!empty($match[2])) {
-				trigger_error('mailto: hex encoding does not work with extra attributes. Try javascript.', E_USER_WARNING);
-
-				return;
+				throw new InvalidArgumentException('mailto: hex encoding does not work with extra attributes. Try javascript.');
 			}
 			$address_encode = '';
 			for ($x = 0, $_length = strlen($address); $x < $_length; $x++) {
