@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Test: EmailHelper - Container
@@ -17,9 +17,9 @@ require __DIR__ . '/../bootstrap.php';
 
 $template = '<a href="mailto:%s" >%s</a>';
 
-test(function () use ($template) {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
-	$class = $loader->load(function (Compiler $compiler) {
+test(function () use ($template): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
+	$class = $loader->load(function (Compiler $compiler): void {
 		$loader = new Loader();
 		$config = $loader->load(FileMock::create('
 		services:
@@ -32,7 +32,7 @@ test(function () use ($template) {
 	}, 1);
 
 	/** @var Container $container */
-	$container = new $class;
+	$container = new $class();
 
 	/** @var Engine $latte */
 	$latte = $container->getByType('Latte\Engine');

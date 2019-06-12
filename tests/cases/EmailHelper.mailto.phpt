@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Test: EmailHelper - mailto
@@ -12,12 +12,12 @@ require __DIR__ . '/../bootstrap.php';
 
 $template = '<a href="mailto:%s" >%s</a>';
 
-test(function () {
+test(function (): void {
 	$output = EmailHelper::mailto('my@email.com', EmailHelper::ENCODE_DRUPAL);
 	Assert::type(Html::class, $output);
 });
 
-test(function () use ($template) {
+test(function () use ($template): void {
 	$email = 'my@email.com';
 	$output = EmailHelper::mailto($email, EmailHelper::ENCODE_DRUPAL);
 
@@ -25,7 +25,7 @@ test(function () use ($template) {
 	Assert::equal(sprintf($template, 'my[at]email.com', 'my[at]email.com'), (string) $output);
 });
 
-test(function () use ($template) {
+test(function () use ($template): void {
 	$email = 'my@email.com';
 	$output = EmailHelper::mailto($email, EmailHelper::ENCODE_DRUPAL, 'MY EMAIL');
 

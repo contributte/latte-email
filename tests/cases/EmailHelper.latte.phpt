@@ -1,7 +1,7 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
- * Test: EmailHelepr - Latte parsing
+ * Test: EmailHelper - Latte parsing
  */
 
 use Contributte\Latte\Email\Helpers\EmailHelper;
@@ -13,7 +13,7 @@ require __DIR__ . '/../bootstrap.php';
 
 $template = '<a href="mailto:%s" >%s</a>';
 
-test(function () {
+test(function (): void {
 	$email = 'my@email.com';
 
 	$latte = new Engine();
@@ -23,7 +23,7 @@ test(function () {
 	Assert::equal($email, $output);
 });
 
-test(function () {
+test(function (): void {
 	$email = 'my@email.com';
 	$output1 = EmailHelper::mailto($email, EmailHelper::ENCODE_DRUPAL);
 
@@ -35,7 +35,7 @@ test(function () {
 	Assert::equal((string) $output1, $output2);
 });
 
-test(function () use ($template) {
+test(function () use ($template): void {
 	$email = 'my@email.com';
 	$output = sprintf($template, 'my[at]email.com', 'my[at]email.com');
 
