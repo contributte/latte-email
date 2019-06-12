@@ -1,7 +1,4 @@
-<?php
-/**
- * Copyright (c) 2012-2014 Milan Felix Sulc <rkfelix@gmail.com>
- */
+<?php declare(strict_types = 1);
 
 namespace Contributte\Latte\Email\Helpers;
 
@@ -15,19 +12,13 @@ final class EmailHelper
 {
 
 	// Encoding types
-	const ENCODE_JAVASCRIPT = 'javascript';
-	const ENCODE_JAVASCRIPT_CHARCODE = 'javascript_charcode';
-	const ENCODE_HEX = 'hex';
-	const ENCODE_DRUPAL = 'drupal';
-	const ENCODE_TEXY = 'texy';
+	public const ENCODE_JAVASCRIPT = 'javascript';
+	public const ENCODE_JAVASCRIPT_CHARCODE = 'javascript_charcode';
+	public const ENCODE_HEX = 'hex';
+	public const ENCODE_DRUPAL = 'drupal';
+	public const ENCODE_TEXY = 'texy';
 
-	/**
-	 * @param string $address
-	 * @param string $encode [optional]
-	 * @param string $text [optional]
-	 * @return Html
-	 */
-	public static function mailto($address, $encode = NULL, $text = NULL)
+	public static function mailto(string $address, ?string $encode = null, ?string $text = null): Html
 	{
 		return Html::el()->setHtml(self::protect($address, $encode, $text));
 	}
@@ -35,24 +26,14 @@ final class EmailHelper
 	/**
 	 * Smarty {mailto} function plugin
 	 *
-	 * @param string $address
-	 * @param string $encode [optional]
-	 * @param string $text [optional]
-	 *
-	 * @link     http://www.smarty.net/manual/en/language.function.mailto.php {mailto}
-	 *           (Smarty online manual)
-	 * @version  1.2
-	 * @author   Monte Ohrt <monte at ohrt dot com>
-	 * @author   credits to Jason Sweat (added cc, bcc and subject functionality)
-	 *
-	 * @return string
+	 * @link http://www.smarty.net/manual/en/language.function.mailto.php
 	 */
-	public static function protect($address, $encode = NULL, $text = NULL)
+	public static function protect(string $address, ?string $encode = null, ?string $text = null): string
 	{
-		$_text = $text == NULL ? $address : $text;
-		$_extra = NULL;
+		$_text = $text ?? $address;
+		$_extra = null;
 
-		if ($encode == 'javascript') {
+		if ($encode === 'javascript') {
 			$string = 'document.write(\'<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>\');';
 
 			$js_encode = '';
@@ -61,7 +42,9 @@ final class EmailHelper
 			}
 
 			return '<script type="text/javascript">eval(unescape(\'' . $js_encode . '\'))</script>';
-		} elseif ($encode == 'javascript_charcode') {
+		}
+
+		if ($encode === 'javascript_charcode') {
 			$string = '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
 			$ord = [];
 
@@ -77,7 +60,9 @@ final class EmailHelper
 				. "</script>\n";
 
 			return $_ret;
-		} elseif ($encode == 'hex') {
+		}
+
+		if ($encode === 'hex') {
 			preg_match('!^(.*)(\?.*)$!', $address, $match);
 			if (!empty($match[2])) {
 				throw new InvalidArgumentException('mailto: hex encoding does not work with extra attributes. Try javascript.');
@@ -98,20 +83,24 @@ final class EmailHelper
 			$mailto = '&#109;&#97;&#105;&#108;&#116;&#111;&#58;';
 
 			return '<a href="' . $mailto . $address_encode . '" ' . $_extra . '>' . $text_encode . '</a>';
-		} else if ($encode == 'drupal') {
+		}
+
+		if ($encode === 'drupal') {
 			$address = str_replace('@', '[at]', $address);
-			$_text = $text == NULL ? $address : $_text;
+			$_text = $text === null ? $address : $_text;
 
-			return '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
-		} else if ($encode == 'texy') {
-			$address = str_replace('@', '<!-- ANTISPAM -->&#64;<!-- /ANTISPAM -->', $address);
-			$_text = $text == NULL ? $address : $_text;
-
-			return '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
-		} else {
-			// no encoding
 			return '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
 		}
+
+		if ($encode === 'texy') {
+			$address = str_replace('@', '<!-- ANTISPAM -->&#64;<!-- /ANTISPAM -->', $address);
+			$_text = $text === null ? $address : $_text;
+
+			return '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
+		}
+
+		// no encoding
+		return '<a href="mailto:' . $address . '" ' . $_extra . '>' . $_text . '</a>';
 	}
 
 }
