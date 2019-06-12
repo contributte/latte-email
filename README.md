@@ -21,10 +21,12 @@ Latte filter based on Smarty idea to protect your email address.
 
 ## Versions
 
-| State       | Version  | Branch   | PHP      | |
-|-------------|----------|----------|----------|-|
-| stable      | `~2.0.0` | `master` | `>= 5.6` ||
-| stable      | `~1.2.1` | `master` | `>= 5.4` |(old namespace)|
+| State       | Version | Branch   | Nette | PHP     | |
+|-------------|---------|----------|-------|---------|-|
+| dev         | `^3.1`  | `master` | 3.0+  | `^7.2`  | |
+| stable      | `^3.0`  | `master` | 3.0+  | `^7.2`  | |
+| stable      | `^2.0`  | `master` | 2.4   | `>=5.6` | |
+| stable      | `^1.2`  | `master` | 2.4   | `>=5.4` | (old namespace)
 
 ## Maintainers
 
