@@ -1,8 +1,10 @@
-# Folders
-/vendor
+# IDE
+/.idea
 
-# Files
+# Composer
+/vendor
 /composer.lock
 
 # Tests
-/tests/*.log
+/temp
+/coverage.xml
