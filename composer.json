@@ -12,11 +12,11 @@
   ],
   "require": {
     "php": "^7.2",
-    "latte/latte": "~2.4.7",
-    "nette/utils": "~2.4.9 || ~2.5.3"
+    "latte/latte": "~2.5.1",
+    "nette/utils": "~3.0.1"
   },
   "require-dev": {
-    "nette/di": "~2.4.10",
+    "nette/di": "~3.0.0",
     "ninjify/nunjuck": "^0.2.0",
     "ninjify/qa": "^0.8.0",
     "phpstan/extension-installer": "^1.0",
@@ -37,7 +37,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.1-dev"
+      "dev-master": "3.1-dev"
     }
   }
 }
