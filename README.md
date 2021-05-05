@@ -1,23 +1,25 @@
-# Contributte Latte - email filter
-  
-Latte filter based on Smarty idea to protect your email address.
+![](https://heatbadger.now.sh/github/readme/contributte/latte-email/?deprecated=1)
 
-[![Build Status](https://img.shields.io/travis/contributte/latte-email.svg?style=flat-square)](https://travis-ci.org/contributte/latte-email)
-[![Code coverage](https://img.shields.io/coveralls/contributte/latte-email.svg?style=flat-square)](https://coveralls.io/r/contributte/latte-email)
-[![Licence](https://img.shields.io/packagist/l/contributte/latte-email.svg?style=flat-square)](https://packagist.org/packages/contributte/latte-email)
-[![Downloads this Month](https://img.shields.io/packagist/dm/contributte/latte-email.svg?style=flat-square)](https://packagist.org/packages/contributte/latte-email)
-[![Downloads total](https://img.shields.io/packagist/dt/contributte/latte-email.svg?style=flat-square)](https://packagist.org/packages/contributte/latte-email)
-[![Latest stable](https://img.shields.io/packagist/v/contributte/latte-email.svg?style=flat-square)](https://packagist.org/packages/contributte/latte-email)
-[![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+<p align=center>
+    <a href="https://bit.ly/ctteg"><img src="https://badgen.net/badge/support/gitter/cyan"></a>
+    <a href="https://bit.ly/cttfo"><img src="https://badgen.net/badge/support/forum/yellow"></a>
+    <a href="https://contributte.org/partners.html"><img src="https://badgen.net/badge/sponsor/donations/F96854"></a>
+</p>
 
-## Discussion / Help
+<p align=center>
+    Website 🚀 <a href="https://contributte.org">contributte.org</a> | Contact 👨🏻‍💻 <a href="https://f3l1x.io">f3l1x.io</a> | Twitter 🐦 <a href="https://twitter.com/contributte">@contributte</a>
+</p>
 
-[![Join the chat](https://img.shields.io/gitter/room/contributte/contributte.svg?style=flat-square)](http://bit.ly/ctteg)
+## Disclaimer
 
-## Documentation
+| :warning: | This project is no longer being maintained. Please use [contributte/latte](https://github.com/contributte/latte).
+|---|---|
 
-- [Setup](.docs/README.md#setup)
-- [Usage](.docs/README.md#usage)
+| Composer | [`contributte/latte`](https://packagist.org/packages/contributte/latte-email) |
+|---| --- |
+| Version | ![](https://badgen.net/packagist/v/contributte/latte-email) |
+| PHP | ![](https://badgen.net/packagist/php/contributte/latte-email) |
+| License | ![](https://badgen.net/github/license/contributte/latte-email) |
 
 ## Versions
 
@@ -28,20 +30,64 @@ Latte filter based on Smarty idea to protect your email address.
 | stable      | `^2.0`  | `master` | 2.4   | `>=5.6` | |
 | stable      | `^1.2`  | `master` | 2.4   | `>=5.4` | (old namespace)
 
-## Maintainers
+## Usage :tada:
 
-<table>
-  <tbody>
-    <tr>
-      <td align="center">
-        <a href="https://github.com/f3l1x">
-            <img width="150" height="150" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=150">
-        </a>
-        </br>
-        <a href="https://github.com/f3l1x">Milan Felix Šulc</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+### Setup
 
-Thank you for testing, reporting and contributing.
+Register filter (in case you use nette/di)
+
+```yaml
+services:
+    nette.latteFactory:
+        setup:
+            - addFilter('email', 'Contributte\Latte\Helpers\EmailHelper::mailto')
+            # or
+            - addFilter('email', ['Contributte\Latte\Helpers\EmailHelper', 'mailto'])
+```
+
+Alternatively you can also add filter directly to template
+
+```php
+use Contributte\Latte\Email\Helpers\EmailHelper;
+
+public function createTemplate()
+{
+    $template = parent::createTemplate();
+    $template->addFilter('email', [EmailHelper::class, 'mailto']);
+}
+```
+
+### Usage
+
+```latte
+{var $mail = "my@email.net"}
+
+{$mail|email:"javascript"}
+{$mail|email:"javascript_charcode"}
+{$mail|email:"hex"|noescape}
+{$mail|email:"javascript":"link to my email here"}
+{$mail|email:"drupal"}
+{$mail|email:"texy"}
+```
+
+#### Supported encoding methods
+
+* javascript
+* javascript_charcode
+* hex
+* drupal
+* texy
+
+
+### Development
+
+This package was maintain by these authors.
+
+<a href="https://github.com/f3l1x">
+  <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
+</a>
+
+-----
+
+Consider to [support](https://contributte.org/partners.html) **contributte** development team.
+Also thank you for being used this package.
